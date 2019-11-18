@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(req):
-    return HttpResponse("hello world!")
+    return render(req, 'book_shop/index.html')

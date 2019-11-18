@@ -77,7 +77,7 @@ class DeliveryRequest(Request):
         return f'{self.worker} order delivery of {self.book.title}'
 
 
-class Purchase:
+class Purchase(models.Model):
     worker = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, default=None)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, default=None)

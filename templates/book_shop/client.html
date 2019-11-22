@@ -1,0 +1,58 @@
+{% extends 'book_shop/base.html' %}
+{% block title %} Страница клиента {% endblock %}
+{% block content %}
+    <div class="client">
+        <div class="client__search">
+            <a class="grey" href="/">Вернуться к авторизации</a>
+            <hr/>
+            <div class="title">Найти книгу</div>
+            <hr/>
+            <div class="alert alert-secondary" role="alert">
+                <div class="text">Введите название книги или фамилию автора, чтобы найти книги.</div>
+            </div>
+            <form method="get" action="/client">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="searchQuery" placeholder="Введите поисковый запрос"
+                           aria-label="Recipient's username" aria-describedby="basic-addon2" value="{{ inputValue }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Найти</button>
+                    </div>
+                </div>
+            </form>
+            <div class="client__search-results">
+                <div class="list-group">
+                    {% if not searchInfo and not authors %}
+                        <div class="alert alert-info text-center" role="alert">
+                            <div class="text">Мы ничего не нашли. Простите!</div>
+                        </div>
+                    {% endif %}
+                    {% if searchInfo and not authors %}
+                        <div class="alert alert-info text-center" role="alert">
+                            <div class="text">{{ searchInfo }}</div>
+                        </div>
+                    {% endif %}
+                    {% for book in books %}
+                        <a href="/order?book_id={{ book.id }}"
+                           class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                            {{ book.title }}
+                            <small>{{ book.author }}</small>
+                            <span class="badge badge-primary badge-pill">{{ book.number }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+                {% if authors %}
+                    <div class="alert alert-info text-center" role="alert">
+                        <div class="text">Мы нашли следующих авторов:</div>
+                    </div>
+                    {% for author in authors %}
+                        <a href="/authors?author_id={{ author.id }}"
+                           class="list-group-item  list-group-item-action">
+                            {{ author.name }}
+                        </a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

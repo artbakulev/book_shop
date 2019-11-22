@@ -1,5 +1,24 @@
 {% extends 'book_shop/base.html' %}
 {% block title %} Главная {% endblock %}
 {% block content %}
-    {% include 'book_shop/components/navbar.html' %}
+    <div class="index">
+        <div class="index__form">
+            <div class="title">Вход</div>
+            <hr/>
+            <form>
+                <div class="form-group">
+                    <label for="email">Электронная почта: </label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                           placeholder="Введите электронную почту">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль: </label>
+                    <input type="password" class="form-control" id="password" placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="btn btn-outline-dark">Войти</button>
+            </form>
+            <hr/>
+            <small>Вы также можете войти как <a href="/client">клиент</a>.</small>
+        </div>
+    </div>
 {% endblock %}

@@ -1,0 +1,20 @@
+@import "variables"
+.client
+  min-height: 100vh
+  width: 100%
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  background: url("../images/background.jpg") no-repeat center
+  background-size: cover
+
+  .client__search
+    background-color: $white-75
+    +shadow
+    padding: 40px
+    border-radius: 20px
+    min-width: 30vw
+
+  .client__search-results
+    max-width: 100%

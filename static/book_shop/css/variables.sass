@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap')
+
+$primary: rgba(85, 53, 35, 1)
+$primary-75: rgba(85, 53, 35, 0.75)
+$primary-50: rgba(85, 53, 35, 0.5)
+$primary-25: rgba(85, 53, 35, 0.25)
+
+$passive: rgba(226, 232, 232, 1)
+$passive-75: rgba(226, 232, 232, 0.75)
+$passive-50: rgba(226, 232, 232, 0.5)
+$passive-25: rgba(226, 232, 232, 0.25)
+
+$white: rgba(255, 255, 255, 1)
+$white-75: rgba(255, 255, 255, 0.75)
+$white-50: rgba(255, 255, 255, 0.5)
+$white-25: rgba(255, 255, 255, 0.25)
+
+@mixin transition($seconds)
+  transition: $seconds
+  -moz-transition: $seconds
+  -webkit-transition: $seconds
+  -o-transition: $seconds
+
+@mixin shadow()
+  -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5)
+  -moz-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5)
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5)

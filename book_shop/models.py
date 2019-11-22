@@ -8,21 +8,21 @@ class Client(models.Model):
     email = models.CharField(max_length=50)
 
     def __str__(self):
-        return f'client: {self.name}'
+        return f'{self.name}'
 
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'author: {self.name}'
+        return f'{self.name}'
 
 
 class Publisher(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'publisher: {self.name}'
+        return f'{self.name}'
 
 
 class Book(models.Model):

@@ -1,0 +1,26 @@
+{% extends 'book_shop/base.html' %}
+{% block title %} Автор {{ author.name }}{% endblock %}
+{% block content %}
+    <div class="author">
+        <div class="container">
+            <div class="card m-2">
+                <a class="grey text-left p-3" href="#" onClick="history.go(-1);">Назад</a>
+                <div class="card-header bg-dark text-light">
+                    <div class="title">{{ author.name }}</div>
+                </div>
+                <div class="card-footer text-muted text-center text-uppercase">
+                    Книги автора
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for book in books %}
+                        <a href="/books/{{ book.id }}"
+                           class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+                            {{ book.title }}
+                            <span class="badge badge-primary badge-pill">{{ book.number }}</span>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

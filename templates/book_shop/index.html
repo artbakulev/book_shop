@@ -5,20 +5,27 @@
         <div class="index__form">
             <div class="title">Вход</div>
             <hr/>
-            <form>
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form action="/" method="post">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="email">Электронная почта: </label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp"
                            placeholder="Введите электронную почту">
                 </div>
                 <div class="form-group">
                     <label for="password">Пароль: </label>
-                    <input type="password" class="form-control" id="password" placeholder="Введите пароль">
+                    <input type="password" class="form-control" name="password" id="password"
+                           placeholder="Введите пароль">
                 </div>
                 <button type="submit" class="btn btn-outline-dark">Войти</button>
             </form>
             <hr/>
-            <small>Вы также можете войти как <a href="/client">клиент</a>.</small>
+            <small>Вы также можете перейти на страницу <a href="/client">гостя</a>.</small>
         </div>
     </div>
 {% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'book_shop/base.html' %}
+{% load book_shop_extras %}
+{% block title %} Книга {{ book.title }} {% endblock %}
+{% block content %}
+    <div class="book">
+        <div class="container">
+            <div class="card text-center">
+                <a class="grey d-inline text-left p-3" href="#" onClick="history.go(-1);">Назад</a>
+                <div class="card-header">
+                    <p class="card-text">В наличии: <span
+                            class="badge badge-pill badge-primary">{{ book.availability|map_available_tag }}</span></p>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <a class="grey" href="/authors/{{ book.author_id }}"><p class="card-text pb-2">{{ book.author }}</p>
+                    </a>
+                    {% if book.availability != 'REQ' %}
+                        <p class="grey">Вы можете забрать книгу в магазине</p>
+                        <a href="/contacts" class="btn btn-outline-success">Узнать адрес</a>
+                    {% else %}
+                        <a href="#" class="btn btn-outline-success" data-toggle="modal"
+                           data-target="#order">Заказать</a>
+                        {% include 'book_shop/components/order.html' %}
+                    {% endif %}
+                </div>
+                <div class="card-footer text-muted">
+                    {{ book.price }} рублей
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_scripts %}
+    <script type="text/javascript" src="../../static/vendor/bootstrap/bootstrap.min.js"></script>
+{% endblock %}

@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+.author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background: url("../images/background.jpg") no-repeat center;
+  background-size: cover;
+}
+
+/*# sourceMappingURL=author.css.map */

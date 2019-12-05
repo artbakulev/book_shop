@@ -1,0 +1,45 @@
+{% extends 'book_shop/base.html' %}
+{% block title %}
+    Страница работника | Заявки на доставку
+{% endblock %}
+{% block content %}
+    {% include 'book_shop/components/new_request.html' %}
+    {% include 'book_shop/components/navbar.html' %}
+    <div class="main container">
+        <div class="container-fluid justify-content-between d-flex mb-4 align-items-center">
+            <div class="d-inline title text-left">Заявки на доставку книг в торговый зал</div>
+            <button type="button" class="btn btn-outline-success d-inline" data-toggle="modal"
+                    data-target="#request">Новая заявка
+            </button>
+        </div>
+        <div class="list-group">
+            {% for request in requests %}
+                <a data-request-id="{{ request.id }}" href="#"
+                   class="list-group-item list-group-item-action {{ request.status|yesno:"bg-success text-light,bg-light" }}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ request.book.title }}<br><small>{{ request.book.author }}</small></h5>
+                        <small>{{ request.date }}</small>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <small>{{ request.worker.first_name }} {{ request.worker.last_name }}</small>
+                        {% if not request.status %}
+                            <button type="submit" data-request-id="{{ request.id }}"
+                                    class="btn btn-outline-success mb-2">
+                                Выполнена
+                            </button>
+                        {% endif %}
+                    </div>
+                    {% if request.status %}
+                        <hr/>
+                        <div>Заявка выполнена</div>
+                    {% endif %}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block extra_scripts %}
+    <script type="text/javascript" src="../../static/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="../../static/book_shop/js/worker.js" type="text/javascript"></script>
+    <script src="../../static/book_shop/js/network.js" type="text/javascript"></script>
+{% endblock %}

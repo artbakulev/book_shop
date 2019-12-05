@@ -1,27 +1,33 @@
 from django.shortcuts import render, HttpResponse, redirect
 
 from book_shop import common
-from book_shop.models import Book, Author
-from django.contrib.auth import authenticate, login
+from book_shop.models import Book, Author, DeliveryRequest, SupplyRequest
+from django.contrib.auth import authenticate, login, logout as auth_logout
+import json
 
 
 def index(req):
     if req.method == "GET":
+        if req.user.is_authenticated:
+            return redirect('worker_main')
         return render(req, 'book_shop/index.html')
     if req.method == "POST":
         email, password = req.POST.get('email'), req.POST.get('password')
         user = authenticate(req, username=email, password=password)
         if user is not None:
             login(req, user)
-            return redirect('workers_shop')
+            return redirect('worker_main')
         else:
             return render(req, 'book_shop/index.html', {"error": "Некорректный логин и/или пароль"})
     return HttpResponse(status=405)
 
 
-def workers_shop(req):
+def worker_main(req):
     if req.method == "GET":
-        return render(req, 'book_shop/workers_shop.html')
+        requests = DeliveryRequest.objects.all()
+        requests = sorted(requests, key=lambda x: x.status)
+
+        return render(req, 'book_shop/worker-main.html', {"requests_nav": True, "requests": requests})
 
 
 def client(req):
@@ -59,3 +65,22 @@ def author(req, author_id):
     books = Book.objects.filter(author=books_author)
     context = {'books': books, 'author': books_author}
     return render(req, 'book_shop/author.html', context)
+
+
+def logout(req):
+    if not req.user.is_authenticated:
+        return redirect('index')
+    auth_logout(req)
+    return redirect('index')
+
+
+def api_delivery_request(req):
+    if not req.user.is_authenticated:
+        return HttpResponse(status=401)
+    delivery_request_id = json.loads(req.body).get('request_id', False)
+    if not delivery_request_id:
+        return HttpResponse(status=400)
+    delivery_request = DeliveryRequest.objects.get(id=delivery_request_id)
+    delivery_request.status = True
+    delivery_request.save()
+    return HttpResponse(status=200)

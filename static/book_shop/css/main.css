@@ -5,10 +5,10 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 * {
   font-family: Roboto, sans-serif;
-  transition: 0.5s;
-  -moz-transition: 0.5s;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
+  transition: 0.2s;
+  -moz-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -o-transition: 0.2s;
 }
 
 .title {
@@ -103,6 +103,13 @@
   width: 100%;
   background: url("../images/background.jpg") no-repeat center;
   background-size: cover;
+}
+
+.list-group_scrollable {
+  max-height: 300px;
+  margin-bottom: 10px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 /*# sourceMappingURL=main.css.map */

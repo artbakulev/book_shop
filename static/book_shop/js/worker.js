@@ -20,3 +20,22 @@ const makeActive = (listItem) => {
     listItem.append(textBlock);
 };
 
+const listBookItems = document.querySelectorAll('.list-group-item-book');
+listBookItems.forEach(item => {
+    item.addEventListener('click', function () {
+        listBookItems.forEach(item => {
+            item.classList.remove('bg-success');
+            item.classList.remove('text-light');
+        });
+        this.classList.add('bg-success');
+        this.classList.add('text-light');
+    });
+    //TODO: доделай тут
+    let button = item.querySelector('button');
+    button.addEventListener('click', () => {
+        let requestID = item.attributes['data-request-id'].value;
+        button.style.display = 'none';
+        makeActive(item);
+        let err = sendPost('/api/delivery_requests/', {'request_id': requestID});
+    })
+});

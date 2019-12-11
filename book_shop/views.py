@@ -26,8 +26,9 @@ def worker_main(req):
     if req.method == "GET":
         requests = DeliveryRequest.objects.all()
         requests = sorted(requests, key=lambda x: x.status)
+        books = Book.objects.all()
 
-        return render(req, 'book_shop/worker-main.html', {"requests_nav": True, "requests": requests})
+        return render(req, 'book_shop/worker-main.html', {"requests_nav": True, "requests": requests, 'books': books})
 
 
 def client(req):

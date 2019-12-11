@@ -1,0 +1,41 @@
+{% extends 'book_shop/base.html' %}
+{% block title %} Продажа {% endblock %}
+{% block content %}
+    {% include 'book_shop/components/navbar.html' %}
+    <div class="main container">
+        <h4 class="mb-3">Доступные для продажи книги</h4>
+        <div class="list-group">
+            {% for book in books %}
+                <a href="#" data-book-id="{{ book.id }}" class="list-group-item list-group-item-action
+                                list-group-item-book d-flex justify-content-between align-items-center">
+                    <div> {{ book.title }}
+                        <div class="grey d-inline">{{ book.author }}</div>
+                    </div>
+
+                    <div class="d-inline">
+                        {{ book.price }} рублей
+                        <hr>
+                        <div>
+                            В магазине:
+                            {{ book.number_shop }}
+                        </div>
+                        <hr>
+                        <div>
+                            На складе:
+                            {{ book.number_ware }}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        <form action="/workers/" method="post">{% csrf_token %}
+            <input type="number" class="form-control d-inline mt-3" id="sell_amount" name="sell_amount"
+                   placeholder="Введите количество экземпляров">
+            <input type="hidden" class="form-control" id="sell_book_id" name="sell_book_id">
+            {% if message %}
+                <div class="alert alert-info w-100 text-center mt-3">{{ message }}</div>
+            {% endif %}
+            <input type="submit" id="sell-button" class="btn btn-success disabled w-100 mt-3 mb-4" value="Продать">
+        </form>
+    </div>
+{% endblock %}

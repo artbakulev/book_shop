@@ -9,7 +9,7 @@ const sendPost = (url, data) => {
         body: JSON.stringify(data),
     }).catch((err) => {
         console.log(`fetch error ${err}`);
-        return err;
+        throw err;
     })
 };
 

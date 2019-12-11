@@ -1,41 +1,46 @@
-const listItems = document.querySelectorAll('.list-group-item.bg-light[data-request-id]');
-listItems.forEach(item => {
+const deliveryRequests = document.querySelectorAll('.list-group-item.bg-light[data-request-id]');
+deliveryRequests.forEach(item => {
     let button = item.querySelector('button');
     button.addEventListener('click', () => {
         let requestID = item.attributes['data-request-id'].value;
         button.style.display = 'none';
-        makeActive(item);
-        let err = sendPost('/api/delivery_requests/', {'request_id': requestID});
+        resolveDeliveryRequest(item);
+        sendPost('/api/delivery_requests/', {'request_id': requestID}).catch(e => console.log(e));
     })
 });
 
-const makeActive = (listItem) => {
-    listItem.classList.remove('bg-light');
-    listItem.classList.add('bg-success');
-    listItem.classList.add('text-light');
-    let textBlock = document.createElement('div');
-    textBlock.innerText = 'Заявка выполнена';
-    let hr = document.createElement('hr');
-    listItem.append(hr);
-    listItem.append(textBlock);
-};
 
-const listBookItems = document.querySelectorAll('.list-group-item-book');
-listBookItems.forEach(item => {
+const requestsForDelivery = document.querySelectorAll('.list-group-item-book');
+const button = document.getElementById('worker-delivery-button');
+const deliveryModalBody = document.getElementById('delivery-modal-body');
+requestsForDelivery.forEach(item => {
     item.addEventListener('click', function () {
-        listBookItems.forEach(item => {
-            item.classList.remove('bg-success');
-            item.classList.remove('text-light');
+        requestsForDelivery.forEach(item => {
+            item.classList.remove('bg-success', 'text-light');
         });
-        this.classList.add('bg-success');
-        this.classList.add('text-light');
+        this.classList.add('bg-success', 'text-light');
     });
-    //TODO: доделай тут
-    let button = item.querySelector('button');
-    button.addEventListener('click', () => {
-        let requestID = item.attributes['data-request-id'].value;
-        button.style.display = 'none';
-        makeActive(item);
-        let err = sendPost('/api/delivery_requests/', {'request_id': requestID});
-    })
+});
+
+const deliveryAmountInput = document.getElementById('delivery-amount');
+button.addEventListener('click', () => {
+    let book_id = document.querySelector('.list-group-item-book.bg-success').attributes['data-book-id'].value;
+    sendPost('/api/delivery_requests/', {'book_id': book_id, 'amount': deliveryAmountInput.value}).catch(e => console.log(e));
+    deliveryModalBody.insertBefore(createAlert('success', 'Заявка на доставку успешно отправлена'),
+        deliveryModalBody.firstChild);
+});
+
+
+const supplyRequestBtn = document.getElementById('supply-request-button');
+supplyRequestBtn.addEventListener('click', () => {
+    let email = document.getElementById('supply-email').value;
+    let name = document.getElementById('supply-name').value;
+    let phone = document.getElementById('supply-phone').value;
+    let book_id = document.querySelector('.list-group-item-book.bg-success').attributes['data-book-id'].value;
+    let body = document.getElementById('supply-modal-body');
+    sendPost('/api/supply_requests/', {'email': email, 'name': name, 'phone': phone, 'book_id': book_id})
+        .then(() => {
+                body.insertBefore(createAlert('success', 'Заявка успешно отправлена'), body.firstChild);
+            }
+        )
 });

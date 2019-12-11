@@ -1,0 +1,49 @@
+{% block request %}
+    <div class="modal fade" id="request" tabindex="-1" role="dialog"
+         aria-labelledby="order" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100" id="exampleModalCenterTitle">Новая заявка</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="supply-modal-body">
+                    <form class="text-left">
+                        <div class="form-group">
+                            <label for="name">Имя клиента</label>
+                            <input type="text" class="form-control" id="supply-name" name="name"
+                                   placeholder="Введите имя">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Электронный адрес клиента</label>
+                            <input type="email" class="form-control" id="supply-email" name="email"
+                                   aria-describedby="emailHelp" placeholder="Введите почту">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Телефон клиента</label>
+                            <input type="number" class="form-control" id="supply-phone" name="phone"
+                                   placeholder="Введите телефон">
+                        </div>
+                        <div class="list-group list-group_scrollable">
+                            {% for book in books %}
+                                {% if book.availability == 'REQ' %}
+                                    <a data-book-id="{{ book.id }}" href="#" class="list-group-item list-group-item-action
+                                    list-group-item-book">
+                                        <div> {{ book.title }} </div>
+                                        <div class="grey">{{ book.author }}</div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-success" id="supply-request-button">Отправить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

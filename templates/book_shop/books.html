@@ -1,0 +1,39 @@
+{% extends 'book_shop/base.html' %}
+{% block title %} Книги {% endblock %}
+{% block content %}
+    {% include 'book_shop/components/navbar.html' %}
+    <div class="main container">
+        <div class="title text-left mb-2 mt-5">Книги в наличии:</div>
+        <ul class="list-group list-group-flush">
+            {% for book in  books %}
+                {% if book.availability == 'SHOP' %}
+                    <li class="list-group-item d-flex justify-content-between">{{ book.title }}
+                        <div class="grey">{{ book.author }}</div>
+                        <div class="d-inline grey">{{ book.number_ware }}</div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div class="title text-left mb-2 mt-5">Книги на складе:</div>
+        <ul class="list-group list-group-flush">
+            {% for book in  books %}
+                {% if book.availability == 'WARE' %}
+                    <li class="list-group-item d-flex justify-content-between">{{ book.title }}
+                        <div class="grey">{{ book.author }}</div>
+                        <div class="d-inline grey">{{ book.number_ware }}</div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div class="title text-left mb-2 mt-5">Книги у поставщика:</div>
+        <ul class="list-group list-group-flush">
+            {% for book in  books %}
+                {% if book.availability == 'REQ' %}
+                    <li class="list-group-item">{{ book.title }}
+                        <div class="grey">{{ book.author }}</div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

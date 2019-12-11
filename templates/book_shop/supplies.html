@@ -1,0 +1,42 @@
+{% extends 'book_shop/base.html' %}
+{% block title %} Поставки {% endblock %}
+{% block content %}
+    {% include 'book_shop/components/navbar.html' %}
+    <div class="main container">
+        {% for supply in supplies %}
+            <div class="{{ supply.finish|yesno:"bg-secondary text-light, bg-light" }} p-3 rounded mt-3">
+                <h4 class="w-100 d-flex justify-content-between">Поставка {{ supply.id }}
+                    <div class="d-inline">{{ supply.finish|yesno:"завершена," }}</div>
+                </h4>
+                <hr>
+                <div>Составление накладной: <span class="font-weight-bold"> {{ supply.start }}</span></div>
+                {% if supply.finish %}
+                    <div>Заверешение поставки: <span class="font-weight-bold"> {{ supply.finish }}</span></div>
+                {% else %}
+                    <div class="font-weight-bold">Поставка не завершена</div>
+                {% endif %}
+                <hr>
+                <div class="list-group">
+                    {% for book in supply.book_set.all %}
+                        <a href="#" data-book-id="{{ book.id }}" class="list-group-item list-group-item-action
+                                list-group-item-book d-flex justify-content-between align-items-center">
+                            <div>{{ book.title }}
+                                <div class="grey">{{ book.author }}</div>
+                            </div>
+                            {% if not supply.finish %}
+                                <div>Книг в поставке: {{ book.number_init }}</div>
+                            {% endif %}
+                        </a>
+                    {% endfor %}
+                </div>
+                {% if not supply.finish %}
+                    <form action="/workers/supplies" class="mt-2" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="supply_id" value="{{ supply.id }}">
+                        <input type="submit" class="btn btn-success w-100" value="Завершить">
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

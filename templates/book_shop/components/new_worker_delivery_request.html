@@ -1,5 +1,5 @@
 {% block request %}
-    <div class="modal fade" id="request" tabindex="-1" role="dialog"
+    <div class="modal fade" id="request-delivery" tabindex="-1" role="dialog"
          aria-labelledby="order" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -9,17 +9,18 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="delivery-modal-body">
                     <form class="text-left">
                         <div class="form-group">
                             <label for="amount">Количество</label>
-                            <input type="number" class="form-control" id="amount" name="amount"
+                            <input type="number" class="form-control" id="delivery-amount" name="amount"
                                    placeholder="Введите количество экземпляров">
                             <input type="hidden" class="form-control" id="book_id" name="book_id">
                         </div>
                         <div class="list-group list-group_scrollable">
                             {% for book in books %}
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-book">
+                                <a href="#" data-book-id="{{ book.id }}" class="list-group-item list-group-item-action
+                                list-group-item-book">
                                     <div> {{ book.title }} </div>
                                     <div class="grey">{{ book.author }}</div>
                                 </a>
@@ -29,7 +30,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-success">Отправить</button>
+                    <button type="button" id="worker-delivery-button" class="btn btn-success">Отправить</button>
                 </div>
             </div>
         </div>

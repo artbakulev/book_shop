@@ -1,17 +1,45 @@
 {% block navbar %}
+    {% include 'book_shop/components/new_worker_delivery_request.html' %}
+    {% include 'book_shop/components/new_worker_supply_request.html' %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link {{ requests_nav|yesno:"active," }}" href="/workers/requests">ЗАЯВКИ</a>
+                        <a class="nav-link {% if requests_nav == 'purchase' %}
+                        active
+                        {% endif %}" href="/workers">ПОКУПКА</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if requests_nav == 'books' %}
+                        active
+                        {% endif %}" href="/workers/books">КНИГИ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if requests_nav == 'warehouse' %}
+                        active
+                        {% endif %}" href="/workers/warehouse">СКЛАД</a>
                     </li>
                     <li>
-                        <a class="nav-link {{ delivery_nav|yesno:"active," }}" href="/workers/delivery">ПОСТАВКИ</a>
+                        <a class="nav-link {% if requests_nav == 'supplies' %}
+                        active
+                        {% endif %}" href="/workers/supplies">ПОСТАВКИ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if requests_nav == 'clients' %}
+                        active
+                        {% endif %}" href="/workers/clients">КЛИЕНТЫ</a>
                     </li>
                 </ul>
                 <button type="button" class="btn btn-outline-success d-inline mr-2" data-toggle="modal"
-                        data-target="#request">НОВАЯ ЗАЯВКА
+                        data-target="#request">ОТ ПОСТАВЩИКА
+                </button>
+                <button type="button" class="btn btn-outline-success d-inline mr-2" data-toggle="modal"
+                        data-target="#request-delivery">СО СКЛАДА
                 </button>
                 <a href="/logout">
                     <button class="btn btn-outline-success my-2 my-sm-0">ВЫЙТИ</button>
